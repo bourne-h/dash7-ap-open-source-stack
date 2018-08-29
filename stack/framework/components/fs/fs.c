@@ -496,4 +496,6 @@ bool fs_register_file_modified_callback(uint8_t file_id, fs_modified_file_callba
     return false; // already registered
 
   file_modified_callbacks[file_id] = callback;
+  return true;
 }
+
