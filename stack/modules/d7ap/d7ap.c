@@ -100,9 +100,6 @@ uint8_t registered_client_nb = 0;
 
 void d7ap_init(void)
 {
-    // Initialize the D7AP stack
-    d7ap_stack_init();
-
     registered_client_nb = 0;
     // Initialize Fs with the default access profiles if not done by the application
     fs_init_args_t fs_init_args = (fs_init_args_t){
@@ -114,6 +111,9 @@ void d7ap_init(void)
     };
 
     fs_init(&fs_init_args);
+
+    // Initialize the D7AP stack
+    d7ap_stack_init();
 }
 
 void d7ap_stop()
