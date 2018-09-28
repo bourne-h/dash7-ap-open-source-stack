@@ -255,7 +255,8 @@ void d7ap_set_tx_power(uint8_t power)
  */
 uint8_t d7ap_get_tx_power(void)
 {
-
+    // TODO
+	return 0;
 }
 
 
@@ -266,7 +267,7 @@ uint8_t d7ap_get_tx_power(void)
  */
 void d7ap_set_access_class(uint8_t access_class)
 {
-
+    fs_write_dll_conf_active_access_class(access_class);
 }
 
 
@@ -277,5 +278,5 @@ void d7ap_set_access_class(uint8_t access_class)
  */
 uint8_t d7ap_get_access_class(void)
 {
-
+    return fs_read_dll_conf_active_access_class();
 }
