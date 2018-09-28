@@ -35,6 +35,8 @@
 #define DPRINT(...)
 #endif
 
+#define D7A_SECURITY_HEADER_SIZE 5
+
 dae_access_profile_t default_access_profiles[DEFAULT_ACCESS_PROFILES_COUNT] = {
     {
         // AC used for pushing data to the GW, continuous FG scan
@@ -161,15 +163,45 @@ d7ap_addressee_id_type_t d7ap_get_dev_addr(uint8_t* addr)
 
 
 /**
- * @brief Get the maximum payload size.
+ * @brief Get the maximum payload size according the security configuration.
  *
- * @param[in] clientId  The d7A  instance structure.
+ * @param[in] nls_method     The security configuration.
  *
  * @returns the maximum payload size in bytes.
  */
-uint8_t d7ap_get_payload_max_size(uint8_t clientId)
+uint8_t d7ap_get_payload_max_size(nls_method_t nls_method)
 {
+    uint8_t max_payload_size = D7A_PAYLOAD_MAX_SIZE;
 
+    switch (nls_method)
+    {
+        case(AES_CTR):
+            max_payload_size -= D7A_SECURITY_HEADER_SIZE;
+            break;
+        case(AES_CBC_MAC_128):
+            max_payload_size -= 16;
+            break;
+        case(AES_CBC_MAC_64):
+            max_payload_size -= 8;
+            break;
+        case(AES_CBC_MAC_32):
+            max_payload_size -= 4;
+            break;
+        case(AES_CCM_128):
+            max_payload_size -= 16 + D7A_SECURITY_HEADER_SIZE;
+            break;
+        case(AES_CCM_64):
+            max_payload_size -= 8 + D7A_SECURITY_HEADER_SIZE;
+            break;
+        case(AES_CCM_32):
+            max_payload_size -= 4 + D7A_SECURITY_HEADER_SIZE;
+            break;
+        case AES_NONE:
+        default:
+            break;
+    }
+
+    return max_payload_size;
 }
 
 
