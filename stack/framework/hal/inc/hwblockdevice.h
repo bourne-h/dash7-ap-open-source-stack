@@ -10,8 +10,8 @@ typedef struct blockdevice blockdevice_t;
 
 typedef struct {
   void (*init)(blockdevice_t* bd);
-  error_t (*read)(blockdevice_t* bd, uint8_t* data, uint32_t addr, uint32_t size);
-  error_t (*program)(blockdevice_t* bd, uint8_t* data, uint32_t addr, uint32_t size);
+  error_t (*read)(blockdevice_t* bd, const uint8_t* data, uint32_t addr, uint32_t size);
+  error_t (*program)(blockdevice_t* bd, const uint8_t* data, uint32_t addr, uint32_t size);
 } blockdevice_driver_t;
 
 struct blockdevice {
@@ -19,8 +19,8 @@ struct blockdevice {
 };
 
 void blockdevice_init(blockdevice_t* bd);
-error_t blockdevice_read(blockdevice_t* bd, uint8_t* data, uint32_t addr, uint32_t size);
-error_t blockdevice_program(blockdevice_t* bd, uint8_t* data, uint32_t addr, uint32_t size);
+error_t blockdevice_read(blockdevice_t* bd, const uint8_t* data, uint32_t addr, uint32_t size);
+error_t blockdevice_program(blockdevice_t* bd, const uint8_t* data, uint32_t addr, uint32_t size);
 
 #endif
 
